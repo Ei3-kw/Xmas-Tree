@@ -80,7 +80,11 @@ for i in range(13):
 # animation function
 def animate(i):
     graph.plot(xs[i:i+2], ys[i:i+2], zs[i:i+2], color=gradient[i])
-    graph.view_init(30, 0.3 * i)
+    
+    # more cam angles
+    # graph.view_init(30, 0.3 * i)
+    graph.view_init(i, i)
+    # graph.view_init(2*i, i)
     return []
 
 # instantiate the animator.
