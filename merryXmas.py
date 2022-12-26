@@ -1,8 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import colors as mcolors
+import matplotlib.colors as mcolors
+from matplotlib import cm
+# from matplotlib.colors import LinearSegmentedColormap, ListedColormap
 
 graph = plt.figure().add_subplot(111, projection='3d')
+# all colors
+colors = sorted(list(mcolors.CSS4_COLORS.values())) 
 
 # starting point
 x, y, z = 0, 0, -5
@@ -41,13 +45,26 @@ zs *= 0.2
 graph.set_xlim(-1, 1)
 graph.set_ylim(-1, 1)
 graph.set_zlim(-1, 1)
-graph.plot(xs, ys, zs, color='g')
+
+# green tree
+# graph.plot(xs, ys, zs, color='g')
+
+# selected gradient jet for da tree
+# refs:
+# https://matplotlib.org/stable/tutorials/colors/colormaps.html
+# https://matplotlib.org/stable/tutorials/colors/colormap-manipulation.html
+# ListedColormap
+gradient = cm.get_cmap('magma', len(xs)).colors
+# LinearSegmentedColormap
+gradient = cm.get_cmap('jet')(np.linspace(0, 1, len(xs)))
+
+for i in range(len(xs)):
+    graph.plot(xs[i:i+2], ys[i:i+2], zs[i:i+2], color=gradient[i])
 
 # a star at the top
 graph.scatter(0, 0, 1, c='darkorange', marker='*', s=200)
 
 # 13 gifts on the ground
-colors = list(mcolors.CSS4_COLORS.keys())
 for i in range(13):
     x = np.random.uniform(-1, 1)
     y = np.random.uniform(-1, 1)
