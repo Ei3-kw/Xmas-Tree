@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 from matplotlib import cm
 # from matplotlib.colors import LinearSegmentedColormap, ListedColormap
+from matplotlib import animation
 
-graph = plt.figure().add_subplot(111, projection='3d')
+fig = plt.figure()
+graph = fig.add_subplot(111, projection='3d')
 # all colors
 colors = sorted(list(mcolors.CSS4_COLORS.values())) 
 
@@ -56,10 +58,11 @@ graph.set_zlim(-1, 1)
 # ListedColormap
 gradient = cm.get_cmap('magma', len(xs)).colors
 # LinearSegmentedColormap
-gradient = cm.get_cmap('ocean')(np.linspace(0, 1, len(xs)))
+gradient = cm.get_cmap('jet')(np.linspace(0, 1, len(xs)))
 
-for i in range(len(xs)):
-    graph.plot(xs[i:i+2], ys[i:i+2], zs[i:i+2], color=gradient[i])
+# no animation
+# for i in range(len(xs)):
+#     graph.plot(xs[i:i+2], ys[i:i+2], zs[i:i+2], color=gradient[i])
 
 # a star at the top
 graph.scatter(0, 0, 1, c='darkorange', marker='*', s=200)
@@ -74,5 +77,18 @@ for i in range(13):
     graph.scatter(x, y, -1, c=c1, marker='s', s=size)
     graph.scatter(x, y, -1, c=c2, marker='+', s=size)
 
-plt.title('Merry Turtle Sponge Xmas')
+# animation function
+def animate(i):
+    graph.plot(xs[i:i+2], ys[i:i+2], zs[i:i+2], color=gradient[i])
+    graph.view_init(30, 0.3 * i)
+    return sum([graph.plot([], [], [], '-', c=c)
+             for c in gradient], []) 
+
+# instantiate the animator.
+anim = animation.FuncAnimation(fig, animate, frames=100, blit=True, repeat=False)
+
+# Save as mp4, brew install ffmpeg doesn't work :/
+# anim.save('turtly_Xmas.mp4', fps=15)
+
+plt.title('Merry Turtle Sponge Xmas :3')
 plt.show()
