@@ -87,7 +87,7 @@ def animate(i):
 # instantiate the animator.
 anim = animation.FuncAnimation(fig, animate, frames=100, blit=True, repeat=False)
 
-# Save as mp4, brew install ffmpeg doesn't work :/
+# Save as mp4, brew install ffmpeg
 # anim.save('turtly_Xmas.mp4', fps=15)
 
 plt.title('Merry Turtle Sponge Xmas :3')
