@@ -81,8 +81,7 @@ for i in range(13):
 def animate(i):
     graph.plot(xs[i:i+2], ys[i:i+2], zs[i:i+2], color=gradient[i])
     graph.view_init(30, 0.3 * i)
-    return sum([graph.plot([], [], [], '-', c=c)
-             for c in gradient], []) 
+    return []
 
 # instantiate the animator.
 anim = animation.FuncAnimation(fig, animate, frames=100, blit=True, repeat=False)
